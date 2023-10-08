@@ -1,9 +1,9 @@
-import MainPage from './main-page';
-import type { PromoInfo } from './main-page';
+import Main from './main';
+import type { PromoInfo } from './main';
 
 function App(props: PromoInfo) {
   return (
-    <MainPage
+    <Main
       {...props}
     />
   );

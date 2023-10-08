@@ -8,7 +8,7 @@ type PromoInfo = {
   posterImagePath: string;
 }
 
-function MainPage(props: PromoInfo) {
+function Main(props: PromoInfo) {
   return (
     <>
       <section className="film-card">
@@ -234,5 +234,5 @@ function MainPage(props: PromoInfo) {
   );
 }
 
-export default MainPage;
+export default Main;
 export type { PromoInfo };
