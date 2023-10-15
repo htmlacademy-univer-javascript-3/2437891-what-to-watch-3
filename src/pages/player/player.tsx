@@ -18,12 +18,9 @@ export function Player() {
         <div className="player__controls-row">
           <button type="button" className="player__play">
             <svg viewBox="0 0 19 19" width={19} height={19}>
-              {/* 0 0 14 21 for pause,  0 0 19 19 for play */}
               <use xlinkHref="#play-s" />
-              {/* play-s  or  pause */}
             </svg>
             <span>Play</span>
-            {/* Play  or  Pause */}
           </button>
           <div className="player__name">Transpotting</div>
           <button type="button" className="player__full-screen">
