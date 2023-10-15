@@ -1,12 +1,10 @@
-import Main from './main';
-import type { PromoInfo } from './main';
+import { Main } from '../pages/main/main';
+import type { PromoInfo } from '../pages/main/main';
 
-function App(props: PromoInfo) {
+export function App(props: PromoInfo) {
   return (
     <Main
       {...props}
     />
   );
 }
-
-export default App;

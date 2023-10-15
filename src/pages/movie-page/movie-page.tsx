@@ -1,4 +1,7 @@
-function MoviePageInList() {
+import { Footer } from '../../components/footer';
+import { Logo } from '../../components/logo';
+
+export function MoviePage() {
   return (
     <>
       <section className="film-card film-card--full">
@@ -11,13 +14,7 @@ function MoviePageInList() {
           </div>
           <h1 className="visually-hidden">WTW</h1>
           <header className="page-header film-card__head">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
+            <Logo/>
             <ul className="user-block">
               <li className="user-block__item">
                 <div className="user-block__avatar">
@@ -49,8 +46,8 @@ function MoviePageInList() {
                   <span>Play</span>
                 </button>
                 <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 18 14" width={18} height={14}>
-                    <use xlinkHref="#in-list" />
+                  <svg viewBox="0 0 19 20" width={19} height={20}>
+                    <use xlinkHref="#add" />
                   </svg>
                   <span>My list</span>
                   <span className="film-card__count">9</span>
@@ -182,21 +179,8 @@ function MoviePageInList() {
             </article>
           </div>
         </section>
-        <footer className="page-footer">
-          <div className="logo">
-            <a href="main.html" className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer/>
       </div>
     </>
   );
 }
-
-export default MoviePageInList;

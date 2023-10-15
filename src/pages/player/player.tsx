@@ -1,4 +1,4 @@
-function PlayerPause() {
+export function Player() {
   return (
     <div className="player">
       <video src="#" className="player__video" poster="img/player-poster.jpg" />
@@ -17,10 +17,13 @@ function PlayerPause() {
         </div>
         <div className="player__controls-row">
           <button type="button" className="player__play">
-            <svg viewBox="0 0 14 21" width={14} height={21}>
-              <use xlinkHref="#pause" />
+            <svg viewBox="0 0 19 19" width={19} height={19}>
+              {/* 0 0 14 21 for pause,  0 0 19 19 for play */}
+              <use xlinkHref="#play-s" />
+              {/* play-s  or  pause */}
             </svg>
-            <span>Pause</span>
+            <span>Play</span>
+            {/* Play  or  Pause */}
           </button>
           <div className="player__name">Transpotting</div>
           <button type="button" className="player__full-screen">
@@ -34,5 +37,3 @@ function PlayerPause() {
     </div>
   );
 }
-
-export default PlayerPause;

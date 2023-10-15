@@ -3,7 +3,7 @@ type CardInfo = {
     imagePath: string;
 }
 
-function SmallFilmCard({title, imagePath}: CardInfo) {
+export function SmallFilmCard({title, imagePath}: CardInfo) {
   return (
     <article className="small-film-card catalog__films-card">
       <div className="small-film-card__image">
@@ -22,5 +22,3 @@ function SmallFilmCard({title, imagePath}: CardInfo) {
     </article>
   );
 }
-
-export default SmallFilmCard;
