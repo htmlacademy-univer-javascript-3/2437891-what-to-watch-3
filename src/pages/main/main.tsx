@@ -1,5 +1,6 @@
 import { Footer } from '../../components/footer';
 import { Logo } from '../../components/logo';
+import { films } from '../../mock/films';
 import { SmallFilmCard } from './small-film-card';
 
 export type PromoInfo = {
@@ -10,14 +11,14 @@ export type PromoInfo = {
   posterImagePath: string;
 }
 
-export function Main(props: PromoInfo) {
+export function Main(promo: PromoInfo) {
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src={props.imapePath}
-            alt={props.title}
+            src={promo.imapePath}
+            alt={promo.title}
           />
         </div>
         <h1 className="visually-hidden">WTW</h1>
@@ -43,17 +44,17 @@ export function Main(props: PromoInfo) {
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src={props.posterImagePath}
-                alt={props.title}
+                src={promo.posterImagePath}
+                alt={promo.title}
                 width={218}
                 height={327}
               />
             </div>
             <div className="film-card__desc">
-              <h2 className="film-card__title">{props.title}</h2>
+              <h2 className="film-card__title">{promo.title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{props.genre}</span>
-                <span className="film-card__year">{props.year}</span>
+                <span className="film-card__genre">{promo.genre}</span>
+                <span className="film-card__year">{promo.year}</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
@@ -130,82 +131,7 @@ export function Main(props: PromoInfo) {
             </li>
           </ul>
           <div className="catalog__films-list">
-            <SmallFilmCard
-              title='Fantastic Beasts: The Crimes of Grindelwald'
-              imagePath='img/fantastic-beasts-the-crimes-of-grindelwald.jpg'
-            />
-            <SmallFilmCard
-              title='Bohemian Rhapsody'
-              imagePath='img/bohemian-rhapsody.jpg'
-            />
-            <SmallFilmCard
-              title='Macbeth'
-              imagePath='img/macbeth.jpg'
-            />
-            <SmallFilmCard
-              title='Aviator'
-              imagePath='img/aviator.jpg'
-            />
-            <SmallFilmCard
-              title='We need to talk about Kevin'
-              imagePath='img/we-need-to-talk-about-kevin.jpg'
-            />
-            <SmallFilmCard
-              title='What We Do in the Shadows'
-              imagePath='img/what-we-do-in-the-shadows.jpg'
-            />
-            <SmallFilmCard
-              title='Revenant'
-              imagePath='img/revenant.jpg'
-            />
-            <SmallFilmCard
-              title='Johnny English'
-              imagePath='img/johnny-english.jpg'
-            />
-            <SmallFilmCard
-              title='Shutter Island'
-              imagePath='img/shutter-island.jpg'
-            />
-            <SmallFilmCard
-              title='Pulp Fiction'
-              imagePath='img/pulp-fiction.jpg'
-            />
-            <SmallFilmCard
-              title='No Country for Old Men'
-              imagePath='img/no-country-for-old-men.jpg'
-            />
-            <SmallFilmCard
-              title='Snatch'
-              imagePath='img/snatch.jpg'
-            />
-            <SmallFilmCard
-              title='Moonrise Kingdom'
-              imagePath='img/moonrise-kingdom.jpg'
-            />
-            <SmallFilmCard
-              title='Seven Years in Tibet'
-              imagePath='img/seven-years-in-tibet.jpg'
-            />
-            <SmallFilmCard
-              title='Midnight Special'
-              imagePath='img/midnight-special.jpg'
-            />
-            <SmallFilmCard
-              title='War of the Worlds'
-              imagePath='img/war-of-the-worlds.jpg'
-            />
-            <SmallFilmCard
-              title='Dardjeeling Limited'
-              imagePath='img/dardjeeling-limited.jpg'
-            />
-            <SmallFilmCard
-              title='Orlando'
-              imagePath='img/orlando.jpg'
-            />
-            <SmallFilmCard
-              title='Mindhunter'
-              imagePath='img/mindhunter.jpg'
-            />
+            {films.map((film) => <SmallFilmCard key={film.title} {...film} />)}
           </div>
           <div className="catalog__more">
             <button className="catalog__button" type="button">
