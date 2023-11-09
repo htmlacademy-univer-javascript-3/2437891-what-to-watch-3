@@ -1,7 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import React from 'react';
 import { App } from './components/app';
-import { promo } from './mock/promoFilm';
+import { promo } from './mocks/promoFilm';
+import { films } from './mocks/films';
+import { video } from './mocks/video';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -10,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
-      {...promo}
+      promoInfo={promo}
+      films={films}
+      videoUrl={video}
     />
   </React.StrictMode>
 );

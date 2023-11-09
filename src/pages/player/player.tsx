@@ -1,7 +1,11 @@
-export function Player() {
+export type PlayerProps = {
+  videoUrl: string;
+}
+
+export function Player({videoUrl}: PlayerProps) {
   return (
     <div className="player">
-      <video src="#" className="player__video" poster="img/player-poster.jpg" />
+      <video src={videoUrl} className="player__video" poster="img/player-poster.jpg" />
       <button type="button" className="player__exit">
     Exit
       </button>

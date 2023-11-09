@@ -1,7 +1,8 @@
 import { Footer } from '../../components/footer';
 import { Logo } from '../../components/logo';
-import { films } from '../../mock/films';
-import { SmallFilmCard } from './small-film-card';
+import { films } from '../../mocks/films';
+import { FilmsList } from '../../components/films/films-list';
+import { UserBlock } from '../../components/user-block';
 
 export type PromoInfo = {
   title: string;
@@ -11,50 +12,36 @@ export type PromoInfo = {
   posterImagePath: string;
 }
 
-export function Main(promo: PromoInfo) {
+export function Main(props: PromoInfo) {
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src={promo.imapePath}
-            alt={promo.title}
+            src={props.imapePath}
+            alt={props.title}
           />
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <header className="page-header film-card__head">
           <Logo/>
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img
-                  src="img/avatar.jpg"
-                  alt="User avatar"
-                  width={63}
-                  height={63}
-                />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <UserBlock/>
         </header>
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src={promo.posterImagePath}
-                alt={promo.title}
+                src={props.posterImagePath}
+                alt={props.title}
                 width={218}
                 height={327}
               />
             </div>
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promo.title}</h2>
+              <h2 className="film-card__title">{props.title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promo.genre}</span>
-                <span className="film-card__year">{promo.year}</span>
+                <span className="film-card__genre">{props.genre}</span>
+                <span className="film-card__year">{props.year}</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
@@ -130,9 +117,7 @@ export function Main(promo: PromoInfo) {
               </a>
             </li>
           </ul>
-          <div className="catalog__films-list">
-            {films.map((film) => <SmallFilmCard key={film.title} {...film} />)}
-          </div>
+          <FilmsList films={films}/>
           <div className="catalog__more">
             <button className="catalog__button" type="button">
               Show more
