@@ -6,7 +6,8 @@ export type FilmsListProps = {
 }
 
 export function FilmsList({films} : FilmsListProps) {
-  const [_, setActiveCardId] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activeCardId, setActiveCardId] = useState(0);
   return (
     <div className="catalog__films-list">
       {films.map((film) => <SmallFilmCard key={film.title} info={film} setActiveCardId={setActiveCardId}/>)}
