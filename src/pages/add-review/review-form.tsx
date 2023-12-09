@@ -4,9 +4,9 @@ import { Rating } from './rating';
 
 export function ReviewForm() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [rating, setRating] = useState(0);
+  const [, setRating] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [text, setText] = useState('');
+  const [, setText] = useState('');
   const ratingRange = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
   return (
     <div className="add-review">
