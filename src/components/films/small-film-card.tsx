@@ -1,9 +1,12 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { VideoPlayer } from '../video-player';
 
 export type CardInfo = {
   id: number;
   title: string;
   imagePath: string;
+  videoPath: string;
 }
 
 export type SmallFilmCardProps = {
@@ -12,19 +15,45 @@ export type SmallFilmCardProps = {
 }
 
 export function SmallFilmCard({info, setActiveCardId}: SmallFilmCardProps) {
+  const [isVideoPlayingNeeded, setIsVideoPlayingNeeded] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const timeout = 1000;
+
+  useEffect(() => {
+    let isUpdateNeeded = true;
+
+    if (isVideoPlayingNeeded) {
+      setTimeout(() => isUpdateNeeded && setIsVideoPlaying(true), timeout);
+    }
+
+    return () => {
+      isUpdateNeeded = false;
+    };
+  }, [isVideoPlayingNeeded]);
+
+  const onMouseOver = () => {
+    setActiveCardId(info.id);
+    setIsVideoPlayingNeeded(true);
+  };
+
+  const onMouseLeave = () => {
+    setIsVideoPlayingNeeded(false);
+    setIsVideoPlaying(false);
+  };
+
   return (
-    <article className="small-film-card catalog__films-card" onMouseOver={() => setActiveCardId(info.id)}>
-      <div className="small-film-card__image">
-        <img
-          src={info.imagePath}
-          alt={info.title}
-          width="{280}"
-          height="{175}"
-        />
-      </div>
-      <h3 className="small-film-card__title">
-        <Link to={`/films/${info.id}`} className="small-film-card__link">{info.title}</Link>
-      </h3>
-    </article>
+    <Link
+      to={`/films/${info.id}`}
+      className="small-film-card__link"
+      onMouseOver={onMouseOver}
+      onMouseLeave={onMouseLeave}
+    >
+      <VideoPlayer
+        src={info.videoPath}
+        poster={info.imagePath}
+        muted
+        isPlaying={isVideoPlaying}
+      />
+    </Link>
   );
 }
