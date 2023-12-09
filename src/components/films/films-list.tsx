@@ -6,7 +6,6 @@ export type FilmsListProps = {
 }
 
 export function FilmsList({films} : FilmsListProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [activeCardId, setActiveCardId] = useState(0);
   return (
     <div className="catalog__films-list">
