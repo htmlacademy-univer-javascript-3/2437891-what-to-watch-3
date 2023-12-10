@@ -3,9 +3,7 @@ import { Rating } from './rating';
 
 
 export function ReviewForm() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [, setRating] = useState(0);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [, setText] = useState('');
   const ratingRange = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
   return (
