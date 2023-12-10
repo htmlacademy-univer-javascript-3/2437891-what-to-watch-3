@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { VideoPlayer } from '../video-player';
+import { VideoPlayer } from './video-player';
 
 export type CardInfo = {
   id: number;
