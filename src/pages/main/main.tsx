@@ -1,10 +1,12 @@
 import { Footer } from '../../components/footer';
 import { Logo } from '../../components/logo';
-import { films } from '../../mocks/films';
 import { FilmsList } from '../../components/films/films-list';
 import { UserBlock } from '../../components/user-block';
-import { useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { GenresList } from './genres-list';
+import { useEffect } from 'react';
+import { showDefaultCountFilms, showMoreFilms } from '../../store/action';
+import { ShowMore } from './show-more';
 
 export type PromoInfo = {
   title: string;
@@ -15,7 +17,13 @@ export type PromoInfo = {
 }
 
 export function Main(props: PromoInfo) {
-  const activeGenre = useAppSelector((state) => state.genre);
+  const filmsToShowCount = useAppSelector((state)=>(state.filmsCount));
+  const filmsList = useAppSelector((state)=>(state.films));
+  const dispatch = useAppDispatch();
+  useEffect(() => () => {
+    dispatch(showDefaultCountFilms());
+  }, [dispatch]);
+
   return (
     <>
       <section className="film-card">
@@ -69,15 +77,12 @@ export function Main(props: PromoInfo) {
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
           <GenresList/>
-          <FilmsList films={
-            films.filter((f) => activeGenre === 'All Genres' || activeGenre === f.genre)
-          }
-          />
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">
-              Show more
-            </button>
-          </div>
+          <FilmsList films={filmsList.slice(0, filmsToShowCount)}/>
+          {filmsToShowCount >= filmsList.length ? null :
+            <ShowMore onClickHandler={()=>{
+              dispatch(showMoreFilms());
+            }}
+            />}
         </section>
         <Footer/>
       </div>
