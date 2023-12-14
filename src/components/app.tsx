@@ -10,62 +10,67 @@ import { Player } from '../pages/player/player';
 import { NotFound } from '../pages/not-found/not-found';
 import { PrivateRoute } from './private-route';
 import { CardInfo } from './films/small-film-card';
+import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
+import { Provider } from 'react-redux';
 
 export type AppProps = {
   promoInfo: PromoInfo;
   films: CardInfo[];
   videoUrl: string;
+  store: ToolkitStore;
 }
 
-export function App({promoInfo, films, videoUrl}: AppProps) {
+export function App({promoInfo, films, videoUrl, store}: AppProps) {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path={AppRoute.Main}
-          element={<Main {...promoInfo}/>}
-        />
-        <Route
-          path={AppRoute.SignIn}
-          element={<SignIn/>}
-        />
-        <Route
-          path={AppRoute.MyList}
-          element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <MyList films={films}/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Film}
-          element={
-            <MoviePage
-              films={films.slice(0, 4)}
-              filmInfo={promoInfo}
-            />
-          }
-        />
-        <Route
-          path={AppRoute.AddReview}
-          element={
-            <AddReview
-              id={1}
-              title={promoInfo.title}
-              imapePath={promoInfo.imapePath}
-              posterImagePath={promoInfo.posterImagePath}
-            />
-          }
-        />
-        <Route
-          path={AppRoute.Player}
-          element={<Player videoUrl={videoUrl}/>}
-        />
-        <Route
-          path="*"
-          element={<NotFound/>}
-        />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path={AppRoute.Main}
+            element={<Main {...promoInfo}/>}
+          />
+          <Route
+            path={AppRoute.SignIn}
+            element={<SignIn/>}
+          />
+          <Route
+            path={AppRoute.MyList}
+            element={
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <MyList films={films}/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.Film}
+            element={
+              <MoviePage
+                films={films.slice(0, 4)}
+                filmInfo={promoInfo}
+              />
+            }
+          />
+          <Route
+            path={AppRoute.AddReview}
+            element={
+              <AddReview
+                id={1}
+                title={promoInfo.title}
+                imapePath={promoInfo.imapePath}
+                posterImagePath={promoInfo.posterImagePath}
+              />
+            }
+          />
+          <Route
+            path={AppRoute.Player}
+            element={<Player videoUrl={videoUrl}/>}
+          />
+          <Route
+            path="*"
+            element={<NotFound/>}
+          />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }

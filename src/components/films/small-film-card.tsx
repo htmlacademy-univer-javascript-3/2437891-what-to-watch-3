@@ -7,6 +7,7 @@ export type CardInfo = {
   title: string;
   imagePath: string;
   videoPath: string;
+  genre: string;
 }
 
 export type SmallFilmCardProps = {
