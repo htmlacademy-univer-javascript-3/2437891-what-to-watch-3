@@ -1,11 +1,11 @@
 import { FilmsList } from '../../components/films/films-list';
 import { Footer } from '../../components/footer';
 import { Logo } from '../../components/logo';
-import { CardInfo } from '../../components/films/small-film-card';
 import { UserBlock } from '../../components/user-block';
+import { Film } from '../../types';
 
 export type MyListProps = {
-  films: CardInfo[];
+  films: Film[];
 }
 
 export function MyList({films}: MyListProps) {

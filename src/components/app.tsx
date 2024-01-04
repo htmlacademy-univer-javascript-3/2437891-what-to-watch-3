@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Main } from '../pages/main/main';
-import type { PromoInfo } from '../pages/main/main';
-import { AppRoute, AuthorizationStatus } from './const';
+import { AppRoute, AuthorizationStatus } from '../const';
 import { SignIn } from '../pages/sign-in/sign-in';
 import { MyList } from '../pages/my-list/my-list';
 import { MoviePage } from '../pages/movie-page/movie-page';
@@ -9,13 +8,13 @@ import { AddReview } from '../pages/add-review/add-review';
 import { Player } from '../pages/player/player';
 import { NotFound } from '../pages/not-found/not-found';
 import { PrivateRoute } from './private-route';
-import { CardInfo } from './films/small-film-card';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { Provider } from 'react-redux';
+import { Film, Promo } from '../types';
 
 export type AppProps = {
-  promoInfo: PromoInfo;
-  films: CardInfo[];
+  promoInfo: Promo;
+  films: Film[];
   videoUrl: string;
   store: ToolkitStore;
 }
@@ -27,7 +26,7 @@ export function App({promoInfo, films, videoUrl, store}: AppProps) {
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<Main {...promoInfo}/>}
+            element={<Main/>}
           />
           <Route
             path={AppRoute.SignIn}
@@ -55,9 +54,9 @@ export function App({promoInfo, films, videoUrl, store}: AppProps) {
             element={
               <AddReview
                 id={1}
-                title={promoInfo.title}
-                imapePath={promoInfo.imapePath}
-                posterImagePath={promoInfo.posterImagePath}
+                title={promoInfo.name}
+                imapePath={promoInfo.backgroundImage}
+                posterImagePath={promoInfo.posterImage}
               />
             }
           />

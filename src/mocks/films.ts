@@ -1,75 +1,40 @@
-import { CardInfo } from '../components/films/small-film-card';
+import { Film } from '../types';
 
 
-export const films: CardInfo[] = [
+export const films: Film[] = [
   {
-    id: 1,
-    title: 'Fantastic Beasts: The Crimes of Grindelwald',
-    imagePath: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
-    videoPath: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
-    genre: 'All genres'
+    id: 'aba664c3-bdf3-4fb3-b8f3-42e007864bbf',
+    name: 'The Grand Budapest Hotel',
+    previewImage: 'https://url-to-image/image.jpg',
+    previewVideoLink: 'https://url-to-video/video.mp4',
+    genre: 'Comedy'
   },
   {
-    id: 2,
-    title: 'Bohemian Rhapsody',
-    imagePath: 'img/bohemian-rhapsody.jpg',
-    videoPath: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm',
-    genre: 'All genres'
+    id: 'aba664c3-bdf3-4fb3-b8f3-42e007864bbf',
+    name: 'The Grand Budapest Hotel',
+    previewImage: 'https://url-to-image/image.jpg',
+    previewVideoLink: 'https://url-to-video/video.mp4',
+    genre: 'Comedy'
   },
   {
-    id: 3,
-    title: 'Macbeth',
-    genre: 'All genres',
-    imagePath: 'img/macbeth.jpg',
-    videoPath: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm'
+    id: 'aba664c3-bdf3-4fb3-b8f3-42e007864bbf',
+    name: 'The Grand Budapest Hotel',
+    previewImage: 'https://url-to-image/image.jpg',
+    previewVideoLink: 'https://url-to-video/video.mp4',
+    genre: 'Comedy'
   },
   {
-    id: 4,
-    title: 'Aviator',
-    genre: 'All genres',
-    imagePath: 'img/aviator.jpg',
-    videoPath: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm'
+    id: 'aba664c3-bdf3-4fb3-b8f3-42e007864bbf',
+    name: 'The Grand Budapest Hotel',
+    previewImage: 'https://url-to-image/image.jpg',
+    previewVideoLink: 'https://url-to-video/video.mp4',
+    genre: 'Comedy'
   },
   {
-    id: 5,
-    title: 'We need to talk about Kevin',
-    genre: 'All genres',
-    imagePath: 'img/we-need-to-talk-about-kevin.jpg',
-    videoPath: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm'
-  },
-  {
-    id: 6,
-    title: 'What We Do in the Shadows',
-    genre: 'All genres',
-    imagePath: 'img/what-we-do-in-the-shadows.jpg',
-    videoPath: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm'
-  },
-  {
-    id: 7,
-    title: 'Revenant',
-    genre: 'All genres',
-    imagePath: 'img/revenant.jpg',
-    videoPath: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm'
-  },
-  {
-    id: 8,
-    title: 'Johnny English',
-    genre: 'All genres',
-    imagePath: 'img/johnny-english.jpg',
-    videoPath: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm'
-  },
-  {
-    id: 9,
-    title: 'Shutter Island',
-    genre: 'All genres',
-    imagePath: 'img/shutter-island.jpg',
-    videoPath: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm'
-  },
-  {
-    id: 10,
-    title: 'Pulp Fiction',
-    genre: 'Comedies',
-    imagePath: 'img/pulp-fiction.jpg',
-    videoPath: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/b/b3/Big_Buck_Bunny_Trailer_400p.ogv/Big_Buck_Bunny_Trailer_400p.ogv.360p.webm'
+    id: 'aba664c3-bdf3-4fb3-b8f3-42e007864bbf',
+    name: 'The Grand Budapest Hotel',
+    previewImage: 'https://url-to-image/image.jpg',
+    previewVideoLink: 'https://url-to-video/video.mp4',
+    genre: 'Comedy'
   }
 ];

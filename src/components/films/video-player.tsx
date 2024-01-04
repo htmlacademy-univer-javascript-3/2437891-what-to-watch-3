@@ -5,9 +5,10 @@ type VideoPlayerProps = {
   poster: string;
   muted: boolean;
   isPlaying: boolean;
+  name: string;
 }
 
-export function VideoPlayer({src, poster, muted, isPlaying}: VideoPlayerProps) {
+export function VideoPlayer({src, poster, muted, isPlaying, name}: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -24,14 +25,19 @@ export function VideoPlayer({src, poster, muted, isPlaying}: VideoPlayerProps) {
   }, [isPlaying]);
 
   return (
-    <video
-      className='player__video'
-      height='175'
-      width='280'
-      ref={videoRef}
-      src={src}
-      poster={poster}
-      muted={muted}
-    />
+    <>
+      <div style={{ width: '19vw', height: '19vh' }}>
+        <video
+          className='player__video'
+          ref={videoRef}
+          src={src}
+          poster={poster}
+          muted={muted}
+        />
+      </div>
+      <div style={{fontSize: '65%', marginBottom: '15%', maxWidth: '19vw'}}>
+        <p>{name}</p>
+      </div>
+    </>
   );
 }

@@ -1,19 +1,17 @@
 import cn from 'classnames';
 import { setGenre } from '../../store/action';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Link } from 'react-router-dom';
 
 export enum GenreTypeEnum {
-    AllGenres = 'All genres',
-    Comedies = 'Comedies',
-    Crime = 'Crime',
-    Documentary = 'Documentary',
-    Dramas = 'Dramas',
-    Horror = 'Horror',
-    KidsAndFamily = 'Kids & Family',
-    Romance = 'Romance',
-    SciFi = 'Sci-Fi',
-    Thrillers = 'Thrillers'
+  AllGenres = 'All genres',
+  Comedies = 'Comedy',
+  Crime = 'Crime',
+  Drama = 'Drama',
+  Fantasy = 'Fantasy',
+  Action = 'Action',
+  Adventure = 'Adventure',
+  Thriller = 'Thriller'
 }
 
 type GenreItemProp = {
