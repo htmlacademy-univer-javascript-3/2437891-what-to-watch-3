@@ -13,6 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <App
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       promoInfo={promo}
       films={films}
       videoUrl={video}

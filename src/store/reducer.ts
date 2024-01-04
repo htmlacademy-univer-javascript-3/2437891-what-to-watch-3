@@ -1,13 +1,27 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { setGenre, showDefaultCountFilms, showMoreFilms } from './action';
-import { films } from '../mocks/films';
+import { loadFilms, loadPromo, setFilmsDataLoadingStatus, setGenre, setPromoDataLoadingStatus, showDefaultCountFilms, showMoreFilms } from './action';
+import { Film, Promo } from '../types';
 
 const defaultFilmsCount = 8;
 
-const initialState = {
+type InitialState = {
+  genre: string;
+  allFilms: Film[];
+  films: Film[];
+  filmsCount: number;
+  isFilmsDataLoading: boolean;
+  promo: Promo | null;
+  isPromoDataLoading: boolean;
+}
+
+const initialState: InitialState = {
   genre: 'All genres',
-  films: films,
-  filmsCount: defaultFilmsCount
+  allFilms: [],
+  films: [],
+  filmsCount: defaultFilmsCount,
+  isFilmsDataLoading: false,
+  promo: null,
+  isPromoDataLoading: false
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -17,9 +31,9 @@ export const reducer = createReducer(initialState, (builder) => {
       state.genre = action.payload;
       const genre = state.genre;
       if (genre === 'All genres') {
-        state.films = films;
+        state.films = state.allFilms;
       } else {
-        state.films = films.filter((f) => f.genre === genre);
+        state.films = state.allFilms.filter((f) => f.genre === genre);
       }
     })
     .addCase(showMoreFilms, (state) => {
@@ -27,5 +41,18 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(showDefaultCountFilms, (state) => {
       state.filmsCount = defaultFilmsCount;
+    })
+    .addCase(loadFilms, (state, action) => {
+      state.allFilms = action.payload;
+      state.films = state.allFilms;
+    })
+    .addCase(setFilmsDataLoadingStatus, (state, action) => {
+      state.isFilmsDataLoading = action.payload;
+    })
+    .addCase(loadPromo, (state, action) => {
+      state.promo = action.payload;
+    })
+    .addCase(setPromoDataLoadingStatus, (state, action) => {
+      state.isPromoDataLoading = action.payload;
     });
 });

@@ -1,15 +1,16 @@
 import { useState } from 'react';
-import { CardInfo, SmallFilmCard } from './small-film-card';
+import { SmallFilmCard } from './small-film-card';
+import { Film } from '../../types';
 
 export type FilmsListProps = {
-    films: CardInfo[];
+    films: Film[];
 }
 
 export function FilmsList({films} : FilmsListProps) {
-  const [, setActiveCardId] = useState(0);
+  const [, setActiveCardId] = useState('');
   return (
     <div className="catalog__films-list">
-      {films.map((film) => <SmallFilmCard key={film.title} info={film} setActiveCardId={setActiveCardId}/>)}
+      {films.map((film) => <SmallFilmCard key={film.name} film={film} setActiveCardId={setActiveCardId}/>)}
     </div>
   );
 }

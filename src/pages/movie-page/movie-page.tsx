@@ -1,9 +1,9 @@
 import { FilmsList } from '../../components/films/films-list';
 import { Footer } from '../../components/footer';
 import { Logo } from '../../components/logo';
-import { CardInfo } from '../../components/films/small-film-card';
 import { UserBlock } from '../../components/user-block';
 import { MovieTabs } from './movie-tabs';
+import { Film, Promo } from '../../types';
 
 export type FilmInfo = {
   title: string;
@@ -14,8 +14,8 @@ export type FilmInfo = {
 }
 
 export type MoviePageProps = {
-  films: CardInfo[];
-  filmInfo: FilmInfo;
+  films: Film[];
+  filmInfo: Promo;
 }
 
 export function MoviePage({films, filmInfo}: MoviePageProps) {
@@ -25,8 +25,8 @@ export function MoviePage({films, filmInfo}: MoviePageProps) {
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img
-              src={filmInfo.imapePath}
-              alt={filmInfo.title}
+              src={filmInfo.backgroundImage}
+              alt={filmInfo.name}
             />
           </div>
           <header className="page-header film-card__head">
@@ -38,7 +38,7 @@ export function MoviePage({films, filmInfo}: MoviePageProps) {
               <h2 className="film-card__title"></h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{filmInfo.genre}</span>
-                <span className="film-card__year">{filmInfo.year}</span>
+                <span className="film-card__year">{filmInfo.released}</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
@@ -65,8 +65,8 @@ export function MoviePage({films, filmInfo}: MoviePageProps) {
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
               <img
-                src={filmInfo.posterImagePath}
-                alt={`${filmInfo.title} poster`}
+                src={filmInfo.posterImage}
+                alt={`${filmInfo.name} poster`}
                 width={218}
                 height={327}
               />

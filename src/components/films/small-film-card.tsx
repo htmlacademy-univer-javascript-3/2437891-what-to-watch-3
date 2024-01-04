@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { VideoPlayer } from './video-player';
+import { Film } from '../../types';
 
 export type CardInfo = {
   id: number;
@@ -11,11 +12,11 @@ export type CardInfo = {
 }
 
 export type SmallFilmCardProps = {
-  info: CardInfo;
-  setActiveCardId: React.Dispatch<React.SetStateAction<number>>;
+  film: Film;
+  setActiveCardId: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export function SmallFilmCard({info, setActiveCardId}: SmallFilmCardProps) {
+export function SmallFilmCard({film, setActiveCardId}: SmallFilmCardProps) {
   const [isVideoPlayingNeeded, setIsVideoPlayingNeeded] = useState(false);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const timeout = 1000;
@@ -33,7 +34,7 @@ export function SmallFilmCard({info, setActiveCardId}: SmallFilmCardProps) {
   }, [isVideoPlayingNeeded]);
 
   const onMouseOver = () => {
-    setActiveCardId(info.id);
+    setActiveCardId(film.id);
     setIsVideoPlayingNeeded(true);
   };
 
@@ -44,16 +45,17 @@ export function SmallFilmCard({info, setActiveCardId}: SmallFilmCardProps) {
 
   return (
     <Link
-      to={`/films/${info.id}`}
+      to={`/films/${film.id}`}
       className="small-film-card__link"
       onMouseOver={onMouseOver}
       onMouseLeave={onMouseLeave}
     >
       <VideoPlayer
-        src={info.videoPath}
-        poster={info.imagePath}
+        src={film.previewVideoLink}
+        poster={film.previewImage}
         muted
         isPlaying={isVideoPlaying}
+        name={film.name}
       />
     </Link>
   );

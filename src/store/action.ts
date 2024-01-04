@@ -1,17 +1,16 @@
 import { createAction } from '@reduxjs/toolkit';
+import { Film, Promo } from '../types';
 
-export const Action = {
-  SET_GENRE: 'SET_GENRE',
-  SHOW_MORE_FILMS: 'SHOW_MORE_FILMS',
-  SHOW_DEFAULT_COUNT_FILMS: 'SHOW_DEFAULT_COUNT_FILMS'
-};
+export const setGenre = createAction<string>('genre/set');
 
-export const setGenre = createAction(Action.SET_GENRE,
-  (value: string) => ({
-    payload: value
-  })
-);
+export const showMoreFilms = createAction('films/showMore');
 
-export const showMoreFilms = createAction(Action.SHOW_MORE_FILMS);
+export const showDefaultCountFilms = createAction('films/showDefaultCount');
 
-export const showDefaultCountFilms = createAction(Action.SHOW_DEFAULT_COUNT_FILMS);
+export const loadFilms = createAction<Film[]>('data/loadFilms');
+
+export const setFilmsDataLoadingStatus = createAction<boolean>('data/setFilmsDataLoadingStatus');
+
+export const loadPromo = createAction<Promo>('data/loadPromo');
+
+export const setPromoDataLoadingStatus = createAction<boolean>('data/setPromoDataLoadingStatus');

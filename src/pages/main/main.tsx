@@ -2,35 +2,39 @@ import { Footer } from '../../components/footer';
 import { Logo } from '../../components/logo';
 import { FilmsList } from '../../components/films/films-list';
 import { UserBlock } from '../../components/user-block';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { GenresList } from './genres-list';
 import { useEffect } from 'react';
-import { showDefaultCountFilms, showMoreFilms } from '../../store/action';
+import { setGenre, showDefaultCountFilms, showMoreFilms } from '../../store/action';
 import { ShowMore } from './show-more';
+import { fetchFilms, fetchPromo } from '../../store/api-action';
+import { Loading } from '../../components/loading';
 
-export type PromoInfo = {
-  title: string;
-  genre: string;
-  year: number;
-  imapePath: string;
-  posterImagePath: string;
-}
-
-export function Main(props: PromoInfo) {
-  const filmsToShowCount = useAppSelector((state)=>(state.filmsCount));
-  const filmsList = useAppSelector((state)=>(state.films));
+export function Main() {
+  const filmsToShowCount = useAppSelector((state) => state.filmsCount);
+  const filmsList = useAppSelector((state) => state.films);
+  const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
+  const isPromoDataLoading = useAppSelector((state) => state.isPromoDataLoading);
+  const promo = useAppSelector((state) => state.promo);
   const dispatch = useAppDispatch();
   useEffect(() => () => {
+    dispatch(fetchPromo());
+    dispatch(fetchFilms());
+    dispatch(setGenre('All genres'));
     dispatch(showDefaultCountFilms());
   }, [dispatch]);
+
+  if (promo === null || isFilmsDataLoading || isPromoDataLoading){
+    return <Loading/>;
+  }
 
   return (
     <>
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src={props.imapePath}
-            alt={props.title}
+            src={promo.backgroundImage}
+            alt={promo.name}
           />
         </div>
         <h1 className="visually-hidden">WTW</h1>
@@ -42,17 +46,17 @@ export function Main(props: PromoInfo) {
           <div className="film-card__info">
             <div className="film-card__poster">
               <img
-                src={props.posterImagePath}
-                alt={props.title}
+                src={promo.posterImage}
+                alt={promo.name}
                 width={218}
                 height={327}
               />
             </div>
             <div className="film-card__desc">
-              <h2 className="film-card__title">{props.title}</h2>
+              <h2 className="film-card__title">{promo.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{props.genre}</span>
-                <span className="film-card__year">{props.year}</span>
+                <span className="film-card__genre">{promo.genre}</span>
+                <span className="film-card__year">{promo.released}</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
