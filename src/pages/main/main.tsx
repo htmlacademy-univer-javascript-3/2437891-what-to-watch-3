@@ -5,9 +5,9 @@ import { UserBlock } from '../../components/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { GenresList } from './genres-list';
 import { useEffect } from 'react';
-import { setGenre, showDefaultCountFilms, showMoreFilms } from '../../store/action';
+import { setGenre, showDefaultCountFilms, showMoreFilms } from '../../store/actions';
 import { ShowMore } from './show-more';
-import { fetchFilms, fetchPromo } from '../../store/api-action';
+import { fetchFilms, fetchPromo } from '../../store/api-actions';
 import { Loading } from '../../components/loading';
 
 export function Main() {

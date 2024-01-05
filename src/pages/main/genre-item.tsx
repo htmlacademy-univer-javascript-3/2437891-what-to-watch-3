@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { setGenre } from '../../store/action';
+import { setGenre } from '../../store/actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Link } from 'react-router-dom';
 

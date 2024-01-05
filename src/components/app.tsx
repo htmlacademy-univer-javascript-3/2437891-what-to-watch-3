@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Main } from '../pages/main/main';
-import { AppRoute, AuthorizationStatus } from '../const';
+import { AppRoute } from '../const';
 import { SignIn } from '../pages/sign-in/sign-in';
 import { MyList } from '../pages/my-list/my-list';
 import { MoviePage } from '../pages/movie-page/movie-page';
@@ -35,7 +35,7 @@ export function App({promoInfo, films, videoUrl, store}: AppProps) {
           <Route
             path={AppRoute.MyList}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute>
                 <MyList films={films}/>
               </PrivateRoute>
             }
