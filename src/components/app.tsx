@@ -10,16 +10,15 @@ import { NotFound } from '../pages/not-found/not-found';
 import { PrivateRoute } from './private-route';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { Provider } from 'react-redux';
-import { Film, Promo } from '../types';
+import { Film } from '../types';
 
 export type AppProps = {
-  promoInfo: Promo;
   films: Film[];
   videoUrl: string;
   store: ToolkitStore;
 }
 
-export function App({promoInfo, films, videoUrl, store}: AppProps) {
+export function App({films, videoUrl, store}: AppProps) {
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -49,12 +48,9 @@ export function App({promoInfo, films, videoUrl, store}: AppProps) {
           <Route
             path={AppRoute.AddReview}
             element={
-              <AddReview
-                id={1}
-                title={promoInfo.name}
-                imapePath={promoInfo.backgroundImage}
-                posterImagePath={promoInfo.posterImage}
-              />
+              <PrivateRoute>
+                <AddReview/>
+              </PrivateRoute>
             }
           />
           <Route
