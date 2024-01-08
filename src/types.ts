@@ -28,3 +28,35 @@ export type UserData = {
   email: string;
   token: string;
 }
+
+export type FilmInfo = {
+  id: string;
+  name: string;
+  posterImage: string;
+  backgroundImage: string;
+  backgroundColor: string;
+  videoLink: string;
+  description: string;
+  rating: number;
+  scoresCount: number;
+  director: string;
+  starring: string[];
+  runTime: number;
+  genre: string;
+  released: number;
+  isFavorite: boolean;
+}
+
+export type Comment = {
+  id: string;
+  date: string;
+  user: string;
+  comment: string;
+  rating: number;
+}
+
+export type CreateCommentRequest = {
+  filmId: string;
+  comment: string;
+  rating: number;
+}

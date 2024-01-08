@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { MovieTab, MovieTabEnum } from './movie-tab';
 import { Details } from './tabs/details';
-import { Review } from './tabs/review';
+import { Comments } from './tabs/comments';
 import { Overview } from './tabs/overview';
 
 export function MovieTabs() {
+
   const [movieTab, setMovieTab] = useState<MovieTabEnum>(MovieTabEnum.Overview);
   const getCurrentTab = (tabType: MovieTabEnum) => {
     switch (tabType) {
@@ -13,7 +14,7 @@ export function MovieTabs() {
       case MovieTabEnum.Details:
         return <Details/>;
       case MovieTabEnum.Review:
-        return <Review/>;
+        return <Comments/>;
     }
   };
 

@@ -1,6 +1,8 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { loadFilms, loadPromo, requireAuthorization, setError, setFilmsDataLoadingStatus, setGenre, setPromoDataLoadingStatus, setUserInfo, showDefaultCountFilms, showMoreFilms } from './actions';
-import { Film, Promo, UserData } from '../types';
+import { loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms,
+  requireAuthorization, setCreatingCommentStatus, setDataLoadingStatus, setError, setGenre, setUserInfo,
+  showDefaultCountFilms, showMoreFilms } from './actions';
+import { Comment, Film, FilmInfo, Promo, UserData } from '../types';
 import { AuthorizationStatus } from '../const';
 
 const defaultFilmsCount = 8;
@@ -10,12 +12,15 @@ type InitialState = {
   allFilms: Film[];
   films: Film[];
   filmsCount: number;
-  isFilmsDataLoading: boolean;
+  isDataLoading: boolean;
   promo: Promo | null;
-  isPromoDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   userInfo: UserData | null;
   error: string | null;
+  currentFilm: FilmInfo | null;
+  similarFilms: Film[];
+  comments: Comment[];
+  isCommentCreated: boolean;
 }
 
 const initialState: InitialState = {
@@ -23,12 +28,15 @@ const initialState: InitialState = {
   allFilms: [],
   films: [],
   filmsCount: defaultFilmsCount,
-  isFilmsDataLoading: false,
+  isDataLoading: false,
   promo: null,
-  isPromoDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   userInfo: null,
-  error: null
+  error: null,
+  currentFilm: null,
+  similarFilms : [],
+  comments: [],
+  isCommentCreated: false
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -53,14 +61,11 @@ export const reducer = createReducer(initialState, (builder) => {
       state.allFilms = action.payload;
       state.films = state.allFilms;
     })
-    .addCase(setFilmsDataLoadingStatus, (state, action) => {
-      state.isFilmsDataLoading = action.payload;
+    .addCase(setDataLoadingStatus, (state, action) => {
+      state.isDataLoading = action.payload;
     })
     .addCase(loadPromo, (state, action) => {
       state.promo = action.payload;
-    })
-    .addCase(setPromoDataLoadingStatus, (state, action) => {
-      state.isPromoDataLoading = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
@@ -70,5 +75,17 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserInfo, (state, action) => {
       state.userInfo = action.payload;
+    })
+    .addCase(loadFilm, (state, action) => {
+      state.currentFilm = action.payload;
+    })
+    .addCase(loadSimilarFilms, (state, action) => {
+      state.similarFilms = action.payload.slice(0, 4);
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(setCreatingCommentStatus, (state, action) => {
+      state.isCommentCreated = action.payload;
     });
 });
