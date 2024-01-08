@@ -8,6 +8,7 @@ export type FilmsListProps = {
 
 export function FilmsList({films} : FilmsListProps) {
   const [, setActiveCardId] = useState('');
+
   return (
     <div className="catalog__films-list">
       {films.map((film) => <SmallFilmCard key={film.name} film={film} setActiveCardId={setActiveCardId}/>)}

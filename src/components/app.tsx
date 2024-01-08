@@ -43,10 +43,7 @@ export function App({promoInfo, films, videoUrl, store}: AppProps) {
           <Route
             path={AppRoute.Film}
             element={
-              <MoviePage
-                films={films.slice(0, 4)}
-                filmInfo={promoInfo}
-              />
+              <MoviePage/>
             }
           />
           <Route

@@ -13,8 +13,6 @@ import { Loading } from '../../components/loading';
 export function Main() {
   const filmsToShowCount = useAppSelector((state) => state.filmsCount);
   const filmsList = useAppSelector((state) => state.films);
-  const isFilmsDataLoading = useAppSelector((state) => state.isFilmsDataLoading);
-  const isPromoDataLoading = useAppSelector((state) => state.isPromoDataLoading);
   const promo = useAppSelector((state) => state.promo);
   const dispatch = useAppDispatch();
   useEffect(() => () => {
@@ -24,7 +22,7 @@ export function Main() {
     dispatch(showDefaultCountFilms());
   }, [dispatch]);
 
-  if (promo === null || isFilmsDataLoading || isPromoDataLoading){
+  if (promo === null) {
     return <Loading/>;
   }
 

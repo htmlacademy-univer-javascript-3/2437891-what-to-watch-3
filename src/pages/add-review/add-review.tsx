@@ -1,23 +1,40 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Logo } from '../../components/logo';
 import { UserBlock } from '../../components/user-block';
 import { ReviewForm } from './review-form';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchFilmInfo } from '../../store/api-actions';
+import { NotFound } from '../not-found/not-found';
+import { Loading } from '../../components/loading';
 
-export type AddReviewProps = {
-  id: number;
-  title: string;
-  imapePath: string;
-  posterImagePath: string;
-}
+export function AddReview() {
+  const { id } = useParams();
+  const film = useAppSelector((state) => state.currentFilm);
+  const isDataLoading = useAppSelector((state) => state.isDataLoading);
+  const dispatch = useAppDispatch();
 
-export function AddReview({id, title, imapePath, posterImagePath}: AddReviewProps) {
+  useEffect(() => () => {
+    if (id === undefined) {
+      return;
+    }
+
+    dispatch(fetchFilmInfo(id));
+  }, [dispatch, id]);
+
+  if (isDataLoading) {
+    return <Loading/>;
+  } else if (id === undefined || !film) {
+    return <NotFound/>;
+  }
+
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
           <img
-            src={imapePath}
-            alt={title}
+            src={film?.backgroundImage}
+            alt={film?.name}
           />
         </div>
         <h1 className="visually-hidden">WTW</h1>
@@ -27,7 +44,7 @@ export function AddReview({id, title, imapePath, posterImagePath}: AddReviewProp
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
                 <Link to={`/films/${id}`} className="breadcrumbs__link">
-                  {title}
+                  {film.name}
                 </Link>
               </li>
               <li className="breadcrumbs__item">
@@ -39,8 +56,8 @@ export function AddReview({id, title, imapePath, posterImagePath}: AddReviewProp
         </header>
         <div className="film-card__poster film-card__poster--small">
           <img
-            src={posterImagePath}
-            alt={`${title} poster`}
+            src={film.posterImage}
+            alt={`${film.name} poster`}
             width={218}
             height={327}
           />

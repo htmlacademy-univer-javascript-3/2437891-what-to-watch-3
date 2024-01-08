@@ -1,32 +1,47 @@
+import { useParams } from 'react-router-dom';
 import { FilmsList } from '../../components/films/films-list';
 import { Footer } from '../../components/footer';
 import { Logo } from '../../components/logo';
 import { UserBlock } from '../../components/user-block';
 import { MovieTabs } from './movie-tabs';
-import { Film, Promo } from '../../types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { fetchComments, fetchFilmInfo, fetchSimilarFilms } from '../../store/api-actions';
+import { Loading } from '../../components/loading';
+import { NotFound } from '../not-found/not-found';
+import { AddReviewButton } from './add-review-button';
 
-export type FilmInfo = {
-  title: string;
-  imapePath: string;
-  posterImagePath: string;
-  genre: string;
-  year: number;
-}
+export function MoviePage() {
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
+  const currentFilm = useAppSelector((state) => state.currentFilm);
+  const similarFilms = useAppSelector((state) => state.similarFilms);
+  const isDataLoading = useAppSelector((state) => state.isDataLoading);
 
-export type MoviePageProps = {
-  films: Film[];
-  filmInfo: Promo;
-}
+  useEffect(() => () => {
+    if (id === undefined) {
+      return;
+    }
 
-export function MoviePage({films, filmInfo}: MoviePageProps) {
+    dispatch(fetchFilmInfo(id));
+    dispatch(fetchSimilarFilms(id));
+    dispatch(fetchComments(id));
+  }, [dispatch, id]);
+
+  if (isDataLoading) {
+    return <Loading/>;
+  } else if (!currentFilm) {
+    return <NotFound/>;
+  }
+
   return (
     <>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img
-              src={filmInfo.backgroundImage}
-              alt={filmInfo.name}
+              src={currentFilm?.backgroundImage}
+              alt={currentFilm?.name}
             />
           </div>
           <header className="page-header film-card__head">
@@ -37,8 +52,8 @@ export function MoviePage({films, filmInfo}: MoviePageProps) {
             <div className="film-card__desc">
               <h2 className="film-card__title"></h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{filmInfo.genre}</span>
-                <span className="film-card__year">{filmInfo.released}</span>
+                <span className="film-card__genre">{currentFilm?.genre}</span>
+                <span className="film-card__year">{currentFilm?.released}</span>
               </p>
               <div className="film-card__buttons">
                 <button className="btn btn--play film-card__button" type="button">
@@ -54,9 +69,7 @@ export function MoviePage({films, filmInfo}: MoviePageProps) {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">
-              Add review
-                </a>
+                <AddReviewButton/>
               </div>
             </div>
           </div>
@@ -65,8 +78,8 @@ export function MoviePage({films, filmInfo}: MoviePageProps) {
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
               <img
-                src={filmInfo.posterImage}
-                alt={`${filmInfo.name} poster`}
+                src={currentFilm?.posterImage}
+                alt={'poster'}
                 width={218}
                 height={327}
               />
@@ -78,7 +91,7 @@ export function MoviePage({films, filmInfo}: MoviePageProps) {
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-          <FilmsList films={films}/>
+          <FilmsList films={similarFilms}/>
         </section>
         <Footer/>
       </div>

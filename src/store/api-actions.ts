@@ -1,9 +1,9 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { AppDispatch, State } from './types';
-import { APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../const';
-import { AuthData, Film, Promo, UserData } from '../types';
-import { loadFilms, loadPromo, requireAuthorization, setError, setFilmsDataLoadingStatus, setPromoDataLoadingStatus, setUserInfo } from './actions';
+import { APIRoute, AuthorizationStatus, TIMEOUT_CREATE_COMMENT, TIMEOUT_SHOW_ERROR } from '../const';
+import { AuthData, Comment, CreateCommentRequest, Film, FilmInfo, Promo, UserData } from '../types';
+import { loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms, requireAuthorization, setCreatingCommentStatus, setDataLoadingStatus, setError, setUserInfo } from './actions';
 import { dropToken, saveToken } from '../services/token';
 import { store } from '.';
 
@@ -14,9 +14,7 @@ export const fetchFilms = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchFilms',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setFilmsDataLoadingStatus(true));
     const {data} = await api.get<Film[]>(APIRoute.Films);
-    dispatch(setFilmsDataLoadingStatus(false));
     dispatch(loadFilms(data));
   }
 );
@@ -28,10 +26,79 @@ export const fetchPromo = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchPromo',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setPromoDataLoadingStatus(true));
     const {data} = await api.get<Promo>(APIRoute.Promo);
-    dispatch(setPromoDataLoadingStatus(false));
     dispatch(loadPromo(data));
+  }
+);
+
+export const fetchFilmInfo = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchFilmInfo',
+  async (filmId, {dispatch, extra: api}) => {
+    dispatch(setDataLoadingStatus(true));
+    try {
+      dispatch(loadFilm(null));
+      const {data} = await api.get<FilmInfo>(`${APIRoute.Films}/${filmId}`);
+      dispatch(loadFilm(data));
+    } catch {
+      dispatch(loadFilm(null));
+    }
+    dispatch(setDataLoadingStatus(false));
+  }
+);
+
+export const fetchSimilarFilms = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchSimilarFilms',
+  async (filmId, {dispatch, extra: api}) => {
+    const {data} = await api.get<Film[]>(`${APIRoute.Films}/${filmId}/similar`);
+    dispatch(loadSimilarFilms(data));
+  }
+);
+
+export const fetchComments = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchComments',
+  async (filmId, {dispatch, extra: api}) => {
+    const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${filmId}`);
+    dispatch(loadComments(data));
+  }
+);
+
+export const clearCreateCommentStatus = createAsyncThunk(
+  'info/clearCreateCommentStatus',
+  () => {
+    setTimeout(
+      () => store.dispatch(setCreatingCommentStatus(false)),
+      TIMEOUT_CREATE_COMMENT
+    );
+  }
+);
+
+export const createComment = createAsyncThunk<void, CreateCommentRequest, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/createComment',
+  async ({filmId, comment, rating}, {dispatch, extra: api}) => {
+    try {
+      dispatch(setDataLoadingStatus(true));
+      await api.post<Comment>(`${APIRoute.Comments}/${filmId}`, {comment, rating});
+      dispatch(setCreatingCommentStatus(true));
+      dispatch(clearCreateCommentStatus());
+    } finally {
+      dispatch(setDataLoadingStatus(false));
+    }
   }
 );
 
