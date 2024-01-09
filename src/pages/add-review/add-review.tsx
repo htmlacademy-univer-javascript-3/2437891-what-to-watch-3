@@ -7,11 +7,11 @@ import { useEffect } from 'react';
 import { fetchFilmInfo } from '../../store/api-actions';
 import { NotFound } from '../not-found/not-found';
 import { Loading } from '../../components/loading';
-import { Film } from '../../types';
+import { FilmInfo } from '../../types';
 
 export function AddReview() {
   const { id } = useParams();
-  const film = useAppSelector((state) => state.currentFilm as Film | null);
+  const film = useAppSelector((state) => state.currentFilm as FilmInfo | null);
   const isDataLoading = useAppSelector((state) => state.isDataLoading as boolean);
   const dispatch = useAppDispatch();
 
