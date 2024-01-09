@@ -4,23 +4,57 @@ import { FilmsList } from '../../components/films/films-list';
 import { UserBlock } from '../../components/user-block';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { GenresList } from './genres-list';
-import { useEffect } from 'react';
-import { setGenre, showDefaultCountFilms, showMoreFilms } from '../../store/actions';
+import { useEffect, useState } from 'react';
+import { setGenre, setMyFilmsCount, showDefaultCountFilms, showMoreFilms } from '../../store/actions';
 import { ShowMore } from './show-more';
-import { fetchFilms, fetchPromo } from '../../store/api-actions';
+import { changeFavoriteStatus, fetchFilms, fetchMyFilms, fetchPromo } from '../../store/api-actions';
 import { Loading } from '../../components/loading';
+import { Link, useNavigate } from 'react-router-dom';
+import { APIRoute, AuthorizationStatus } from '../../const';
+import { Film, Promo } from '../../types';
+import { MyListButton } from '../../components/my-list-button';
 
 export function Main() {
-  const filmsToShowCount = useAppSelector((state) => state.filmsCount);
-  const filmsList = useAppSelector((state) => state.films);
-  const promo = useAppSelector((state) => state.promo);
+  const filmsToShowCount = useAppSelector((state) => state.filmsCount as number);
+  const filmsList = useAppSelector((state) => state.films as Film[]);
+  const promo = useAppSelector((state) => state.promo as Promo | null);
+  const myFilmsCount = useAppSelector((state) => state.myFilmsCount as number);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus as AuthorizationStatus);
+  const [isFavorite, setFavorite] = useState(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onClickMyList = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(APIRoute.Login);
+    } else {
+      if (promo === null) {
+        return;
+      }
+
+      dispatch(changeFavoriteStatus({id: promo.id, status: isFavorite ? 0 : 1}));
+      if (isFavorite) {
+        dispatch(setMyFilmsCount(myFilmsCount - 1));
+      } else {
+        dispatch(setMyFilmsCount(myFilmsCount + 1));
+      }
+      setFavorite(!isFavorite);
+    }
+  };
+
   useEffect(() => () => {
     dispatch(fetchPromo());
     dispatch(fetchFilms());
+    dispatch(fetchMyFilms({isEndOfDataLoading: true}));
     dispatch(setGenre('All genres'));
     dispatch(showDefaultCountFilms());
   }, [dispatch]);
+
+  useEffect(() => () => {
+    if (promo) {
+      setFavorite(promo.isFavorite);
+    }
+  }, [promo]);
 
   if (promo === null) {
     return <Loading/>;
@@ -57,19 +91,13 @@ export function Main() {
                 <span className="film-card__year">{promo.released}</span>
               </p>
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <Link to={`/player/${promo.id}`} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width={19} height={19}>
                     <use xlinkHref="#play-s" />
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width={19} height={20}>
-                    <use xlinkHref="#add" />
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                </Link>
+                <MyListButton onClickMyList={onClickMyList} isFavorite={isFavorite} myFilmsCount={myFilmsCount}/>
               </div>
             </div>
           </div>

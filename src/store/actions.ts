@@ -27,3 +27,7 @@ export const loadSimilarFilms = createAction<Film[]>('data/loadSimilarFilms');
 export const loadComments = createAction<Comment[]>('data/loadComments');
 
 export const setCreatingCommentStatus = createAction<boolean>('data/setCreatingCommentStatus');
+
+export const loadMyFilms = createAction<Film[]>('data/loadMyFilms');
+
+export const setMyFilmsCount = createAction<number>('data/setMyFilmsCount');

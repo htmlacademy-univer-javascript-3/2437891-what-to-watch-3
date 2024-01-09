@@ -14,11 +14,10 @@ import { Film } from '../types';
 
 export type AppProps = {
   films: Film[];
-  videoUrl: string;
   store: ToolkitStore;
 }
 
-export function App({films, videoUrl, store}: AppProps) {
+export function App({films, store}: AppProps) {
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -55,7 +54,7 @@ export function App({films, videoUrl, store}: AppProps) {
           />
           <Route
             path={AppRoute.Player}
-            element={<Player videoUrl={videoUrl}/>}
+            element={<Player/>}
           />
           <Route
             path="*"

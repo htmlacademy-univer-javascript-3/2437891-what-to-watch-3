@@ -1,34 +1,69 @@
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { FilmsList } from '../../components/films/films-list';
 import { Footer } from '../../components/footer';
 import { Logo } from '../../components/logo';
 import { UserBlock } from '../../components/user-block';
 import { MovieTabs } from './movie-tabs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useEffect } from 'react';
-import { fetchComments, fetchFilmInfo, fetchSimilarFilms } from '../../store/api-actions';
+import { useEffect, useState } from 'react';
+import { changeFavoriteStatus, fetchComments, fetchFilmInfo, fetchMyFilms, fetchSimilarFilms } from '../../store/api-actions';
 import { Loading } from '../../components/loading';
 import { NotFound } from '../not-found/not-found';
 import { AddReviewButton } from './add-review-button';
+import { APIRoute, AuthorizationStatus } from '../../const';
+import { Film, FilmInfo } from '../../types';
+import { MyListButton } from '../../components/my-list-button';
+import { setMyFilmsCount } from '../../store/actions';
 
 export function MoviePage() {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const currentFilm = useAppSelector((state) => state.currentFilm);
-  const similarFilms = useAppSelector((state) => state.similarFilms);
-  const isDataLoading = useAppSelector((state) => state.isDataLoading);
+  const navigate = useNavigate();
+  const [isLoading, setLoading] = useState(true);
+  const [isFavorite, setFavorite] = useState(false);
+  const currentFilm = useAppSelector((state) => state.currentFilm as FilmInfo | null);
+  const similarFilms = useAppSelector((state) => state.similarFilms as Film[]);
+  const isDataLoading = useAppSelector((state) => state.isDataLoading as boolean);
+  const myFilmsCount = useAppSelector((state) => state.myFilmsCount as number);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus as AuthorizationStatus);
 
   useEffect(() => () => {
     if (id === undefined) {
       return;
     }
 
-    dispatch(fetchFilmInfo(id));
-    dispatch(fetchSimilarFilms(id));
-    dispatch(fetchComments(id));
+    dispatch(fetchFilmInfo({id, isEndOfDataLoading: false}));
+    dispatch(fetchSimilarFilms({id, isEndOfDataLoading: false}));
+    dispatch(fetchComments({id, isEndOfDataLoading: false}));
+    dispatch(fetchMyFilms({isEndOfDataLoading: true}));
   }, [dispatch, id]);
 
-  if (isDataLoading) {
+  useEffect(() => () => {
+    if (currentFilm) {
+      setFavorite(currentFilm.isFavorite);
+      setLoading(false);
+    }
+  }, [currentFilm]);
+
+  const onClickMyList = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(APIRoute.Login);
+    } else {
+      if (currentFilm === null) {
+        return;
+      }
+
+      dispatch(changeFavoriteStatus({id: currentFilm.id, status: isFavorite ? 0 : 1}));
+      if (isFavorite) {
+        dispatch(setMyFilmsCount(myFilmsCount - 1));
+      } else {
+        dispatch(setMyFilmsCount(myFilmsCount + 1));
+      }
+      setFavorite(!isFavorite);
+    }
+  };
+
+  if ((isDataLoading || isLoading) && !currentFilm) {
     return <Loading/>;
   } else if (!currentFilm) {
     return <NotFound/>;
@@ -56,19 +91,13 @@ export function MoviePage() {
                 <span className="film-card__year">{currentFilm?.released}</span>
               </p>
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
+                <Link to={`/player/${currentFilm.id}`} className="btn btn--play film-card__button" type="button">
                   <svg viewBox="0 0 19 19" width={19} height={19}>
                     <use xlinkHref="#play-s" />
                   </svg>
                   <span>Play</span>
-                </button>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 19 20" width={19} height={20}>
-                    <use xlinkHref="#add" />
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </button>
+                </Link>
+                <MyListButton onClickMyList={onClickMyList} isFavorite={isFavorite} myFilmsCount={myFilmsCount}/>
                 <AddReviewButton/>
               </div>
             </div>
