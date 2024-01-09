@@ -4,12 +4,11 @@ import { Footer } from '../../components/footer';
 import { Logo } from '../../components/logo';
 import { UserBlock } from '../../components/user-block';
 import { useAppSelector } from '../../hooks';
-import { Film } from '../../types';
 import { fetchMyFilms } from '../../store/api-actions';
 
 export function MyList() {
-  const myFilms = useAppSelector((state) => state.myFilms as Film[]);
-  const myFilmsCount = useAppSelector((state) => state.myFilmsCount as number);
+  const myFilms = useAppSelector((state) => state.myFilms);
+  const myFilmsCount = useAppSelector((state) => state.myFilmsCount);
 
   useEffect(() => () => {
     fetchMyFilms({isEndOfDataLoading: true});

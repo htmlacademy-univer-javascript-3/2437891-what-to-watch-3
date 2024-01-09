@@ -11,15 +11,14 @@ import { changeFavoriteStatus, fetchFilms, fetchMyFilms, fetchPromo } from '../.
 import { Loading } from '../../components/loading';
 import { Link, useNavigate } from 'react-router-dom';
 import { APIRoute, AuthorizationStatus } from '../../const';
-import { Film, Promo } from '../../types';
 import { MyListButton } from '../../components/my-list-button';
 
 export function Main() {
-  const filmsToShowCount = useAppSelector((state) => state.filmsCount as number);
-  const filmsList = useAppSelector((state) => state.films as Film[]);
-  const promo = useAppSelector((state) => state.promo as Promo | null);
-  const myFilmsCount = useAppSelector((state) => state.myFilmsCount as number);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus as AuthorizationStatus);
+  const filmsToShowCount = useAppSelector((state) => state.filmsCount);
+  const filmsList = useAppSelector((state) => state.films);
+  const promo = useAppSelector((state) => state.promo);
+  const myFilmsCount = useAppSelector((state) => state.myFilmsCount);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const [isFavorite, setFavorite] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();

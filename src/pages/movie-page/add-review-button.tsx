@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks';
 
 export function AddReviewButton() {
   const { id } = useParams();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus as AuthorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (authorizationStatus !== AuthorizationStatus.Auth || id === undefined) {
     return null;

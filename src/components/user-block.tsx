@@ -3,11 +3,10 @@ import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { logout } from '../store/api-actions';
 import { Link, useNavigate } from 'react-router-dom';
-import { UserData } from '../types';
 
 export function UserBlock() {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus as AuthorizationStatus);
-  const userInfo = useAppSelector((state) => state.userInfo as UserData | null);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const userInfo = useAppSelector((state) => state.userInfo);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [isLogout, setIsLogout] = useState(false);

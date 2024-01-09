@@ -2,16 +2,15 @@ import { Link, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect, useRef, useState } from 'react';
 import { fetchFilmInfo } from '../../store/api-actions';
-import { FilmInfo } from '../../types';
 import { Loading } from '../../components/loading';
 import { NotFound } from '../not-found/not-found';
 import { APIRoute } from '../../const';
 
 export function Player() {
   const {id} = useParams();
-  const film = useAppSelector((state) => state.currentFilm as FilmInfo | null);
+  const film = useAppSelector((state) => state.currentFilm);
   const [isLoading, setLoading] = useState(true);
-  const isDataLoading = useAppSelector((state) => state.isDataLoading as boolean);
+  const isDataLoading = useAppSelector((state) => state.isDataLoading);
   const dispatch = useAppDispatch();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPause, setIsPause] = useState(false);

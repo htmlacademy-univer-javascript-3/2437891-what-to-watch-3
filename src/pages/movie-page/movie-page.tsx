@@ -11,7 +11,6 @@ import { Loading } from '../../components/loading';
 import { NotFound } from '../not-found/not-found';
 import { AddReviewButton } from './add-review-button';
 import { APIRoute, AuthorizationStatus } from '../../const';
-import { Film, FilmInfo } from '../../types';
 import { MyListButton } from '../../components/my-list-button';
 import { setMyFilmsCount } from '../../store/actions';
 
@@ -21,11 +20,11 @@ export function MoviePage() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
   const [isFavorite, setFavorite] = useState(false);
-  const currentFilm = useAppSelector((state) => state.currentFilm as FilmInfo | null);
-  const similarFilms = useAppSelector((state) => state.similarFilms as Film[]);
-  const isDataLoading = useAppSelector((state) => state.isDataLoading as boolean);
-  const myFilmsCount = useAppSelector((state) => state.myFilmsCount as number);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus as AuthorizationStatus);
+  const currentFilm = useAppSelector((state) => state.currentFilm);
+  const similarFilms = useAppSelector((state) => state.similarFilms);
+  const isDataLoading = useAppSelector((state) => state.isDataLoading);
+  const myFilmsCount = useAppSelector((state) => state.myFilmsCount);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   useEffect(() => () => {
     if (id === undefined) {
