@@ -10,15 +10,12 @@ import { NotFound } from '../pages/not-found/not-found';
 import { PrivateRoute } from './private-route';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { Provider } from 'react-redux';
-import { Film } from '../types';
 
 export type AppProps = {
-  films: Film[];
-  videoUrl: string;
   store: ToolkitStore;
 }
 
-export function App({films, videoUrl, store}: AppProps) {
+export function App({store}: AppProps) {
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -35,7 +32,7 @@ export function App({films, videoUrl, store}: AppProps) {
             path={AppRoute.MyList}
             element={
               <PrivateRoute>
-                <MyList films={films}/>
+                <MyList/>
               </PrivateRoute>
             }
           />
@@ -55,7 +52,7 @@ export function App({films, videoUrl, store}: AppProps) {
           />
           <Route
             path={AppRoute.Player}
-            element={<Player videoUrl={videoUrl}/>}
+            element={<Player/>}
           />
           <Route
             path="*"

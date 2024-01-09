@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { logout } from '../store/api-actions';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export function UserBlock() {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -33,7 +33,9 @@ export function UserBlock() {
       <ul className="user-block">
         <li className="user-block__item">
           <div className="user-block__avatar">
-            <img src={userInfo?.avatarUrl} alt="User avatar" width={63} height={63} />
+            <Link to={AppRoute.MyList}>
+              <img src={userInfo?.avatarUrl} alt="User avatar" width={63} height={63}/>
+            </Link>
           </div>
         </li>
         <li className="user-block__item">

@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
-import { loadComments, loadFilm, loadFilms, loadPromo, loadSimilarFilms,
-  requireAuthorization, setCreatingCommentStatus, setDataLoadingStatus, setError, setGenre, setUserInfo,
+import { loadComments, loadFilm, loadFilms, loadMyFilms, loadPromo, loadSimilarFilms,
+  requireAuthorization, setCreatingCommentStatus, setDataLoadingStatus, setError, setGenre, setMyFilmsCount, setUserInfo,
   showDefaultCountFilms, showMoreFilms } from './actions';
 import { Comment, Film, FilmInfo, Promo, UserData } from '../types';
 import { AuthorizationStatus } from '../const';
@@ -21,6 +21,8 @@ type InitialState = {
   similarFilms: Film[];
   comments: Comment[];
   isCommentCreated: boolean;
+  myFilms: Film[];
+  myFilmsCount: number;
 }
 
 const initialState: InitialState = {
@@ -36,7 +38,9 @@ const initialState: InitialState = {
   currentFilm: null,
   similarFilms : [],
   comments: [],
-  isCommentCreated: false
+  isCommentCreated: false,
+  myFilms: [],
+  myFilmsCount: 0
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -87,5 +91,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setCreatingCommentStatus, (state, action) => {
       state.isCommentCreated = action.payload;
+    })
+    .addCase(loadMyFilms, (state, action) => {
+      state.myFilms = action.payload;
+    })
+    .addCase(setMyFilmsCount, (state, action) => {
+      state.myFilmsCount = action.payload;
     });
 });

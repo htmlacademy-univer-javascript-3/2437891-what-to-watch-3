@@ -19,7 +19,7 @@ export function AddReview() {
       return;
     }
 
-    dispatch(fetchFilmInfo(id));
+    dispatch(fetchFilmInfo({id: id, isEndOfDataLoading: true}));
   }, [dispatch, id]);
 
   if (isDataLoading) {
