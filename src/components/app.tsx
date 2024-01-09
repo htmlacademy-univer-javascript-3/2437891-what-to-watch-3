@@ -10,14 +10,12 @@ import { NotFound } from '../pages/not-found/not-found';
 import { PrivateRoute } from './private-route';
 import { ToolkitStore } from '@reduxjs/toolkit/dist/configureStore';
 import { Provider } from 'react-redux';
-import { Film } from '../types';
 
 export type AppProps = {
-  films: Film[];
   store: ToolkitStore;
 }
 
-export function App({films, store}: AppProps) {
+export function App({store}: AppProps) {
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -34,7 +32,7 @@ export function App({films, store}: AppProps) {
             path={AppRoute.MyList}
             element={
               <PrivateRoute>
-                <MyList films={films}/>
+                <MyList/>
               </PrivateRoute>
             }
           />

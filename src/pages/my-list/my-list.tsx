@@ -7,10 +7,6 @@ import { useAppSelector } from '../../hooks';
 import { Film } from '../../types';
 import { fetchMyFilms } from '../../store/api-actions';
 
-export type MyListProps = {
-  films: Film[];
-}
-
 export function MyList() {
   const myFilms = useAppSelector((state) => state.myFilms as Film[]);
   const myFilmsCount = useAppSelector((state) => state.myFilmsCount as number);
