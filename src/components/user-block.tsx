@@ -3,6 +3,7 @@ import { AppRoute, AuthorizationStatus } from '../const';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { logout } from '../store/api-actions';
 import { Link, useNavigate } from 'react-router-dom';
+import { requireAuthorization, setMyFilmsCount } from '../store/actions';
 
 export function UserBlock() {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -18,6 +19,9 @@ export function UserBlock() {
 
   const onLogout = () => {
     setIsLogout(true);
+    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    navigate(AppRoute.Main);
+    dispatch(setMyFilmsCount(0));
   };
 
   if (authorizationStatus === AuthorizationStatus.Auth) {

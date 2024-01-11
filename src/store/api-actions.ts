@@ -50,9 +50,10 @@ export const fetchFilmInfo = createAsyncThunk<void,
       dispatch(loadFilm(data));
     } catch {
       dispatch(loadFilm(null));
-    }
-    if (isEndOfDataLoading) {
-      dispatch(setDataLoadingStatus(false));
+    } finally {
+      if (isEndOfDataLoading) {
+        dispatch(setDataLoadingStatus(false));
+      }
     }
   }
 );
@@ -69,11 +70,14 @@ export const fetchSimilarFilms = createAsyncThunk<void,
 }>(
   'data/fetchSimilarFilms',
   async ({id, isEndOfDataLoading}, {dispatch, extra: api}) => {
-    dispatch(setDataLoadingStatus(true));
-    const {data} = await api.get<Film[]>(`${APIRoute.Films}/${id}/similar`);
-    dispatch(loadSimilarFilms(data));
-    if (isEndOfDataLoading) {
-      dispatch(setDataLoadingStatus(false));
+    try {
+      dispatch(setDataLoadingStatus(true));
+      const {data} = await api.get<Film[]>(`${APIRoute.Films}/${id}/similar`);
+      dispatch(loadSimilarFilms(data));
+    } finally {
+      if (isEndOfDataLoading) {
+        dispatch(setDataLoadingStatus(false));
+      }
     }
   }
 );
@@ -90,11 +94,14 @@ export const fetchComments = createAsyncThunk<void,
 }>(
   'data/fetchComments',
   async ({id, isEndOfDataLoading}, {dispatch, extra: api}) => {
-    dispatch(setDataLoadingStatus(true));
-    const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
-    dispatch(loadComments(data));
-    if (isEndOfDataLoading) {
-      dispatch(setDataLoadingStatus(false));
+    try {
+      dispatch(setDataLoadingStatus(true));
+      const {data} = await api.get<Comment[]>(`${APIRoute.Comments}/${id}`);
+      dispatch(loadComments(data));
+    } finally {
+      if (isEndOfDataLoading) {
+        dispatch(setDataLoadingStatus(false));
+      }
     }
   }
 );
@@ -110,12 +117,15 @@ export const fetchMyFilms = createAsyncThunk<void,
 }>(
   'data/fetchMyFilms',
   async ({isEndOfDataLoading}, {dispatch, extra: api}) => {
-    dispatch(setDataLoadingStatus(true));
-    const {data} = await api.get<Film[]>(APIRoute.Favorite);
-    dispatch(loadMyFilms(data));
-    dispatch(setMyFilmsCount(data.length));
-    if (isEndOfDataLoading) {
-      dispatch(setDataLoadingStatus(false));
+    try {
+      dispatch(setDataLoadingStatus(true));
+      const {data} = await api.get<Film[]>(APIRoute.Favorite);
+      dispatch(loadMyFilms(data));
+      dispatch(setMyFilmsCount(data.length));
+    } finally {
+      if (isEndOfDataLoading) {
+        dispatch(setDataLoadingStatus(false));
+      }
     }
   }
 );
@@ -207,6 +217,7 @@ export const logout = createAsyncThunk<void, undefined, {
     dropToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
     dispatch(setUserInfo(null));
+    dispatch(setMyFilmsCount(0));
   }
 );
 

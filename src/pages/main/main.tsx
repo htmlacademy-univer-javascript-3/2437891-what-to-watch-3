@@ -11,7 +11,6 @@ import { changeFavoriteStatus, fetchFilms, fetchMyFilms, fetchPromo } from '../.
 import { Loading } from '../../components/loading';
 import { Link, useNavigate } from 'react-router-dom';
 import { APIRoute, AuthorizationStatus } from '../../const';
-import { MyListButton } from '../../components/my-list-button';
 
 export function Main() {
   const filmsToShowCount = useAppSelector((state) => state.filmsCount);
@@ -96,7 +95,17 @@ export function Main() {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <MyListButton onClickMyList={onClickMyList} isFavorite={isFavorite} myFilmsCount={myFilmsCount}/>
+                <button className="btn btn--play film-card__button" type="button" onClick={onClickMyList}>
+                  <svg viewBox="0 0 19 20" width={19} height={20}>
+                    {
+                      (authorizationStatus === AuthorizationStatus.Auth ? isFavorite : false)
+                        ? (<use xlinkHref="#in-list"/>)
+                        : (<use xlinkHref="#add"/>)
+                    }
+                  </svg>
+                  <span>My List</span>
+                  <span className="film-card__count">{authorizationStatus === AuthorizationStatus.Auth ? myFilmsCount : 0}</span>
+                </button>
               </div>
             </div>
           </div>
