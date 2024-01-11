@@ -11,7 +11,6 @@ import { Loading } from '../../components/loading';
 import { NotFound } from '../not-found/not-found';
 import { AddReviewButton } from './add-review-button';
 import { APIRoute, AuthorizationStatus } from '../../const';
-import { MyListButton } from '../../components/my-list-button';
 import { setMyFilmsCount } from '../../store/actions';
 
 export function MoviePage() {
@@ -35,12 +34,12 @@ export function MoviePage() {
     dispatch(fetchSimilarFilms({id, isEndOfDataLoading: false}));
     dispatch(fetchComments({id, isEndOfDataLoading: false}));
     dispatch(fetchMyFilms({isEndOfDataLoading: true}));
+    setTimeout(() => setLoading(false), 1000);
   }, [dispatch, id]);
 
   useEffect(() => () => {
     if (currentFilm) {
       setFavorite(currentFilm.isFavorite);
-      setLoading(false);
     }
   }, [currentFilm]);
 
@@ -62,7 +61,7 @@ export function MoviePage() {
     }
   };
 
-  if ((isDataLoading || isLoading) && !currentFilm) {
+  if (isDataLoading || (isLoading && !currentFilm)) {
     return <Loading/>;
   } else if (!currentFilm) {
     return <NotFound/>;
@@ -96,7 +95,17 @@ export function MoviePage() {
                   </svg>
                   <span>Play</span>
                 </Link>
-                <MyListButton onClickMyList={onClickMyList} isFavorite={isFavorite} myFilmsCount={myFilmsCount}/>
+                <button className="btn btn--play film-card__button" type="button" onClick={onClickMyList}>
+                  <svg viewBox="0 0 19 20" width={19} height={20}>
+                    {
+                      isFavorite
+                        ? (<use xlinkHref="#in-list"/>)
+                        : (<use xlinkHref="#add"/>)
+                    }
+                  </svg>
+                  <span>My List</span>
+                  <span className="film-card__count">{myFilmsCount}</span>
+                </button>
                 <AddReviewButton/>
               </div>
             </div>
